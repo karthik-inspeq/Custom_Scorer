@@ -36,7 +36,7 @@ editor_btns = [{
 #     st.session_state.clicked = True
 with st.sidebar:
     st.title("Inspeq Custom Scorer")
-    input = st.text_input("Input")
+    # input = st.text_input("Input")
     output = st.text_input("Output")
     expected = st.text_input("Expected")
 st.session_state["scorer_name"] = st.text_input("Name", value=st.session_state["scorer_name"])
