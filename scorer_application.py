@@ -9,6 +9,8 @@ from score import Score
 from module_loader import Module_Loader
 from code_editor import code_editor
 import datetime
+if "scorer_name" not in st.session_state: st.session_state['scorer_name'] = "scorer_name"
+
 
 # code editor config variables
 height = [10, 22]
@@ -33,13 +35,15 @@ editor_btns = [{
 # def click_button():
 #     st.session_state.clicked = True
 with st.sidebar:
+    st.title("Inspeq Custom Scorer")
     input = st.text_input("Input")
     output = st.text_input("Output")
     expected = st.text_input("Expected")
-funcname = st.text_input("Name")
+st.session_state["scorer_name"] = st.text_input("Name", value=st.session_state["scorer_name"])
 st.radio('Type', ['Python', 'LLM as Judge'])
-code = '''def handler(input: Any, output: Any, expected: Any) -> Any:
-    return Score(name="scorer_name", score=0.0)'''
+code = f'''def handler(input: Any, output: Any, expected: Any) -> Any:
+    return Score(name="{st.session_state["scorer_name"]}", score=0.0)'''
+
 python_code = code_editor(code,  
                             height = height, 
                             lang=language, 
