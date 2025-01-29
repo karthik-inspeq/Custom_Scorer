@@ -32,7 +32,10 @@ editor_btns = [{
 
 # def click_button():
 #     st.session_state.clicked = True
-
+with st.sidebar:
+    input = st.text_input("Input")
+    output = st.text_input("Output")
+    expected = st.text_input("Expected")
 funcname = st.text_input("Name")
 st.radio('Type', ['Python', 'LLM as Judge'])
 code = '''def handler(input: Any, output: Any, expected: Any) -> Any:
@@ -45,9 +48,6 @@ python_code = code_editor(code,
                             focus=focus, 
                             buttons=editor_btns, 
                             options={"wrap": wrap})
-input = st.text_input("Input")
-output = st.text_input("Output")
-expected = st.text_input("Expected")
 # st.button("Run", on_click=click_button)
 
 # if st.session_state.clicked:
@@ -71,10 +71,10 @@ if len(python_code['id']) != 0 and (python_code['type'] == "selection" or python
             st.write("Program Response:")
             # Execute module function with input, output and expected values - Approach 1
             score_ouput = rs.main(input="prompt query", output=output, expected=expected)
-            st.text_area("Results - Approach_1", score_ouput.name + " : " + str(round(score_ouput.score, 2)))
-            # Execute module function with input, output and expected values - Approach 2
-            score_ouput = eval("rs.main")("prompt query", output, expected)
-            st.text_area("Results - Approach_2", score_ouput.name + " : " + str(round(score_ouput.score, 2)))
+            st.text_area("Results", score_ouput.name + " : " + str(round(score_ouput.score, 2)))
+            # # Execute module function with input, output and expected values - Approach 2
+            # score_ouput = eval("rs.main")("prompt query", output, expected)
+            # st.text_area("Results - Approach_2", score_ouput.name + " : " + str(round(score_ouput.score, 2)))
             # Remove the runtime python file
             os.remove(filename)
     # st.session_state.clicked = False
